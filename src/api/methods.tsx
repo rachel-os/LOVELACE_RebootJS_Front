@@ -8,16 +8,19 @@ export function getUsers(): Promise<User[]> {
     .then(resp => {
       return resp.data
     })
-} 
+}
 
 // Login
-export function login(email: string, password: string): Promise<IProfile>{
+export function login(email: string, password: string): Promise<IProfile> {
   return axios
     .post(
       'http://localhost:3000/login',
       {
         username: email,
         password: password
+      },
+      {
+        withCredentials: true
       })
     .then(resp => resp.data)
 } 	
