@@ -1,4 +1,4 @@
-import { TextField, Button } from '@material-ui/core';
+import { Box, Button, Container, Grid,TextField  } from '@material-ui/core';
 import React, { Component } from 'react';
 import history from '../../history';
 import { login } from '../../api/methods';
@@ -31,39 +31,46 @@ export default class LoginForm extends Component<{}, LoginFormState> {
 
   render() {
     return (
-      <form onSubmit={(event) => { event.preventDefault(); this.submit() }}>
-        {/* event.preventDefault : j'empêche son comportement par défaut et je lui demande autre chose, en l'occurence de submit */}
-
-      <TextField
-        label="Email"
-        value={this.state.email.value}
-        required={true}
-        
-        //je récupère tout ce qui existe dans le state et ensuite l'email 
-        onChange={(event) => this.setState({
-          ...this.state,
-          email: {value: event.target.value, isValid: true}
-            // event = changements sur le field - target = le field - value = le contenu du field
-        })}
-      />
-      <TextField
-        type="password"
-        label="Password"
-        required={true}
-        value={this.state.password.value}
-        onChange={(event) => this.setState({
-          ...this.state,
-          password: {value: event.target.value, isValid: true}
-        })}
-      />
-      <Button
-        color="primary"
-        variant="outlined"
-        type="submit"
-      >
-        Submit
-      </Button>
-    </form>
-    )
-  }
+      <Container maxWidth='xs'>
+          <form onSubmit={(event) => { event.preventDefault(); this.submit() }}>
+            {/* event.preventDefault : j'empêche son comportement par défaut et je lui demande autre chose, en l'occurence de submit */}
+            <Box style={{ margin: '2rem 0'}}>
+              <TextField
+                label="Email"
+                value={this.state.email.value}
+                required={true}  
+                //je récupère tout ce qui existe dans le state et ensuite l'email 
+                onChange={(event) => this.setState({
+                  ...this.state,
+                  email: {value: event.target.value, isValid: true}
+                    // event = changements sur le field - target = le field - value = le contenu du field
+                })}
+              />
+            <TextField
+              type="password"
+              label="Password"
+              required={true}
+              value={this.state.password.value}
+              onChange={(event) => this.setState({
+                ...this.state,
+                password: {value: event.target.value, isValid: true}
+              })}
+            />
+          </Box>
+          <Box style={{margin: '1rem 0'}}>
+            <Grid container justify='flex-end'>
+              <Grid item xs>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </form>
+      </Container>
+    )}
 }
