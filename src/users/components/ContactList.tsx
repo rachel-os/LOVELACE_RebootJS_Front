@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import ContactListItem from './ContactListItem';
-import { getUsers } from '../../api/methods';
-import { User } from '../types';
+import { Link } from 'react-router-dom';
 import { List, ListItem, Button } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FaceIcon from '@material-ui/icons/Face';
+import ContactListItem from './ContactListItem';
+import { getUsers } from '../../api/methods';
+import { User } from '../types';
 
 
 //1. Le composant est d'abord créé sans user.
@@ -16,15 +17,15 @@ interface ContactListState {
   users: User[];
 }
 export default class ContactList extends Component<{}, ContactListState> {
-  constructor(props: {}){
+  constructor(props: {}) {
     super(props)
     this.state = {
       users: []
     }
   }
 
-  componentDidMount(){
-    getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
+  componentDidMount() {
+    getUsers().then(fetchedUsers => { this.setState({ users: fetchedUsers }) })
   }
 
   render() {
@@ -32,17 +33,20 @@ export default class ContactList extends Component<{}, ContactListState> {
       <div>
         <h1>Contact List</h1>
         <List>
-        {this.state.users.map((user) => 
-          <ListItem>
-             <ListItemIcon>
-            <FaceIcon />
-          </ListItemIcon>
-            <ContactListItem firstname={user.firstname} lastname={user.lastname}/>
-          </ListItem>
-        )}
-       </List>
+          {this.state.users.map((user) =>
+            <ListItem>
+              <ListItemIcon>
+                <FaceIcon />
+              </ListItemIcon>
+              <ContactListItem firstname={user.firstname} lastname={user.lastname} />
+            </ListItem>
+          )}
+        </List>
 
-       <Button variant="outlined" color="primary">Super button</Button>
+        <Button variant="outlined" color="primary">
+          {/* Mon bouton renvoie désormais à la page de login */}
+          <Link to="/login">Login</Link>
+        </Button>
       </div>
     )
   }

@@ -1,7 +1,10 @@
 import React from 'react';
-import ContactList from './users/components/ContactList';
+import { Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { blue, yellow } from '@material-ui/core/colors';
+import AppContent from './layout/AppContent';
+import history from './history';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -12,9 +15,12 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <ContactList/>
-    </ThemeProvider>
+    // J'englobe mon app avec le Router.
+    <Router history={history}>
+      <ThemeProvider theme={theme}>
+        <AppContent/>
+      </ThemeProvider>
+    </Router>
   );
 }
 
