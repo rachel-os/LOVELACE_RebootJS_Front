@@ -1,7 +1,7 @@
-import React from 'react';
-import { Router } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { blue, yellow } from '@material-ui/core/colors';
+import React from 'react';
+import { Router } from 'react-router-dom';
 import AppContent from './layout/AppContent';
 import history from './history';
 
