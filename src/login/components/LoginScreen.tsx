@@ -3,6 +3,7 @@ import { Person, PersonAdd } from '@material-ui/icons';
 import React, { Component } from 'react';
 import LoginTabPanel from './LoginTabPanel';
 import LoginForm from './LoginForm';
+import RegistrationForm from '../../register/components/RegistrationForm';
 
 interface LoginScreenState {
   //Il s'agit de l'onglet sur lequel on se trouve actuellement.
@@ -34,7 +35,7 @@ export default class LoginScreen extends Component<{}, LoginScreenState> {
         </LoginTabPanel>
         
         <LoginTabPanel valueTab={this.state.tab} index={1}>
-          <h1> Coucou </h1>
+          <RegistrationForm />
         </LoginTabPanel>
       </div>
     )
