@@ -1,7 +1,8 @@
 import { Tabs, Tab } from '@material-ui/core';
+import { Person, PersonAdd } from '@material-ui/icons';
 import React, { Component } from 'react';
 import LoginTabPanel from './LoginTabPanel';
-
+import LoginForm from './LoginForm';
 
 interface LoginScreenState {
   //Il s'agit de l'onglet sur lequel on se trouve actuellement.
@@ -24,12 +25,12 @@ export default class LoginScreen extends Component<{}, LoginScreenState> {
           onChange={(_, newTab) => {
             this.setState({ tab: newTab })
           }}>
-          <Tab label="login" />
-          <Tab label="register" />
+          <Tab icon={<Person />} label="login" />
+          <Tab icon={<PersonAdd />} label="register" />
         </Tabs>
 
         <LoginTabPanel valueTab={this.state.tab} index={0}>
-          <h1> Hello </h1>
+          <LoginForm />
         </LoginTabPanel>
         
         <LoginTabPanel valueTab={this.state.tab} index={1}>
