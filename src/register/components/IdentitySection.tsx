@@ -26,7 +26,7 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           fullWidth={true}
           variant="outlined"
 
-          {...( email.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
+          {...( email.isValid ? {} : { error: true, helperText: email.error })}
         />
         <TextField
           label="Firstname"
