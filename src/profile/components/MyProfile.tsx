@@ -55,7 +55,7 @@ export default class MyProfile extends Component<{}, IProfileFormState> {
   }
 
   saveProfile = () => {
-    console.log('Implementation du Patch')
+    console.log('Patch to be implemented')
   }
 
   changeField = (field: 'email' | 'firstname' | 'lastname' | 'password' | 'confirmation'): ((value: string) => void) => {
@@ -67,7 +67,7 @@ export default class MyProfile extends Component<{}, IProfileFormState> {
         }
       };
 
-      // checking fiels conditions
+      // checking fields conditions
       switch (field) {
         case 'email':
           const { email } = newState.fields;

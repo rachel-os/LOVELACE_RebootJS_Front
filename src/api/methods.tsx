@@ -4,7 +4,7 @@ import { IProfile } from "../profile/types";
 
 // Fetch users via the server
 export function getUsers(): Promise<User[]> {
-  return axios.get(`${process.env.REACT_APP_BACKEND}/profile`)
+  return axios.get(`${process.env.REACT_APP_BACKEND}/profiles`)
     .then(resp => {
       return resp.data
     })
@@ -12,8 +12,8 @@ export function getUsers(): Promise<User[]> {
 
 // Connected profile
 export function getConnectedProfile(): Promise<User> {
-  return axios.get( `${process.env.REACT_APP_BACKEND}/profile/me`, { withCredentials: true }
-  ).then(resp => resp.data)
+  return axios.get( `${process.env.REACT_APP_BACKEND}/profiles/me`, { withCredentials: true })
+  .then(resp => resp.data)
 }
 
 // Login

@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { List, ListItem, Button } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FaceIcon from '@material-ui/icons/Face';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import ContactListItem from './ContactListItem';
 import { getUsers } from '../../api/methods';
 import { User } from '../types';
-
 
 //1. Le composant est d'abord créé sans user.
 //2. Après le component Did Mount, je fais mon axios.get pour récupérer les users 
@@ -17,7 +16,7 @@ interface ContactListState {
   users: User[];
 }
 export default class ContactList extends Component<{}, ContactListState> {
-  constructor(props: {}) {
+  constructor(props: {}){
     super(props)
     this.state = {
       users: []
@@ -25,7 +24,7 @@ export default class ContactList extends Component<{}, ContactListState> {
   }
 
   componentDidMount() {
-    getUsers().then(fetchedUsers => { this.setState({ users: fetchedUsers }) })
+    getUsers().then(fetchedUsers => { this.setState({ users: fetchedUsers })})
   }
 
   render() {
@@ -33,8 +32,8 @@ export default class ContactList extends Component<{}, ContactListState> {
       <div>
         <h1>Contact List</h1>
         <List>
-          {this.state.users.map((user) =>
-            <ListItem>
+          {this.state.users.map((user, index) =>
+            <ListItem key={index}>
               <ListItemIcon>
                 <FaceIcon />
               </ListItemIcon>

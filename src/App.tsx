@@ -1,8 +1,7 @@
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import { Router } from 'react-router-dom';
-import AppContent from './layout/AppContent';
-import AppMenu from './layout/AppMenu';
+import AppLayout from './layout/AppLayout';
 import history from './history';
 
 
@@ -24,8 +23,7 @@ function App() {
     // J'englobe mon app avec le Router.
     <Router history={history}>
       <ThemeProvider theme={theme}>
-        <AppMenu />
-        <AppContent/>
+        <AppLayout />
       </ThemeProvider>
     </Router>
   );

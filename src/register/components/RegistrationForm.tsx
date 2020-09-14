@@ -34,7 +34,7 @@ export default class RegistrationForm extends Component<{}, IRegistrationFormSta
   saveProfile = (): void => {
     const { email, firstname, lastname, password } = this.state.fields;
     register(email.value, password.value, firstname.value, lastname.value)
-      .then(_profile => history.push(`profile`))
+      .then(_profile => history.push('/login'))
       .catch(_error => this.setState({ status: 'error' }));
   }
 

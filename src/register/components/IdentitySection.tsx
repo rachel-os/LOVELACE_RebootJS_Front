@@ -10,14 +10,14 @@ interface IdentitySectionProps {
   changeFirstname: (value: string) => void;
   changeLastname: (value: string) => void;
 }
-  // Avec changeEmail() je dis à l'enfant : tu sais comment changer l'email. 
-  // C'est ensuite le parent qui remplit la fonction pour renvoyer la donnée à l'enfant. 
+// Avec changeEmail() je dis à l'enfant : tu sais comment changer l'email. 
+// C'est ensuite le parent qui remplit la fonction pour renvoyer la donnée à l'enfant. 
 
-export default class IdentitySection extends Component <IdentitySectionProps> {
+export default class IdentitySection extends Component<IdentitySectionProps> {
   render() {
     const { email, firstname, lastname, changeEmail, changeFirstname, changeLastname } = this.props;
     return (
-<Fragment>
+      <Fragment>
         <TextField
           label="Email"
           value={email.value}
@@ -26,7 +26,7 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           fullWidth={true}
           variant="outlined"
 
-          {...( email.isValid ? {} : { error: true, helperText: email.error })}
+          {...(email.isValid ? {} : { error: true, helperText: email.error })}
         />
         <TextField
           label="Firstname"
@@ -35,9 +35,9 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           onChange={(event) => changeFirstname(event.target.value)}
           fullWidth={true}
           variant="outlined"
-          style={{margin: '0.5rem 0'}}
+          style={{ margin: '0.5rem 0' }}
 
-          {...( firstname.isValid ? {} : { error: true, helperText: firstname.error })}
+          {...(firstname.isValid ? {} : { error: true, helperText: firstname.error })}
         />
         <TextField
           label="Lastname"
@@ -47,7 +47,7 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           fullWidth={true}
           variant="outlined"
 
-          {...( lastname.isValid ? {} : { error: true, helperText: lastname.error })}
+          {...(lastname.isValid ? {} : { error: true, helperText: lastname.error })}
         />
       </Fragment>
     )
