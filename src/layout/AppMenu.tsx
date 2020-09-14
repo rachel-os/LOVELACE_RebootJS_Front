@@ -4,6 +4,8 @@ import Forum from '@material-ui/icons/Forum';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import React, { Component, Fragment } from 'react';
+import { ProfileButton } from './ProfileButton';
+
 
 export default class AppMenu extends Component {
   render() {
@@ -19,7 +21,7 @@ export default class AppMenu extends Component {
           </Grid>
           <Grid item>
             <Toolbar>
-              <h1>John Doe</h1>
+              <ProfileButton />
             </Toolbar>
           </Grid>
           <Grid item>
