@@ -12,11 +12,11 @@ export default class ProfileFormCheck extends Component<ProfileFormCheckProps>{
     return (
       this.props.check ?
         <Fragment>
-          <CheckBoxIcon />
+          <ErrorIcon />
           <span>{text}</span>
         </Fragment> :
         <Fragment>
-          <ErrorIcon />
+          <CheckBoxIcon />
           <span>{text}</span>
         </Fragment>
     )
