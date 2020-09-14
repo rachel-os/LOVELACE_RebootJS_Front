@@ -37,7 +37,7 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           variant="outlined"
           style={{margin: '0.5rem 0'}}
 
-          {...( firstname.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
+          {...( firstname.isValid ? {} : { error: true, helperText: firstname.error })}
         />
         <TextField
           label="Lastname"
@@ -47,7 +47,7 @@ export default class IdentitySection extends Component <IdentitySectionProps> {
           fullWidth={true}
           variant="outlined"
 
-          {...( lastname.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
+          {...( lastname.isValid ? {} : { error: true, helperText: lastname.error })}
         />
       </Fragment>
     )

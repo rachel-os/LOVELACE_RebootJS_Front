@@ -19,7 +19,7 @@ export default class AppMenu extends Component {
           </Grid>
           <Grid item>
             <Toolbar>
-              <h1>Nom de l'utilisateur</h1>
+              <h1>John Doe</h1>
             </Toolbar>
           </Grid>
           <Grid item>

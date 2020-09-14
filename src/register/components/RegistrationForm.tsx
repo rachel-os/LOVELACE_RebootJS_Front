@@ -4,10 +4,12 @@ import React, { Component } from 'react';
 import history from '../../history';
 import IdentitySection from './IdentitySection';
 import CredentialsSection from './CredentialsSection';
-import ProfileFormCheck from './ProfileFormCheck';
 import { register } from '../../api/methods';
 import { defaultFormField, defaultPasswordField, IProfileFormFields } from '../../utils/types';
-import { validateEmailField } from '../../utils/validateEmailField';
+import { validateEmailField } from '../utils/validateEmailField';
+import { validateNameField } from '../utils/validateNameField';
+import { validatePasswordField } from '../utils/validatePasswordField';
+import PasswordChecks from './PasswordChecks';
 
 export interface IRegistrationFormState {
   status: 'ready' | 'success' | 'error';
@@ -42,7 +44,7 @@ export default class RegistrationForm extends Component<{}, IRegistrationFormSta
       const newState = {
         fields: {
           ...this.state.fields,
-          [field]: { value: value }
+          [field]: { ...this.state.fields[field], value: value }
         }
       };
 
@@ -54,15 +56,16 @@ export default class RegistrationForm extends Component<{}, IRegistrationFormSta
           break;
         case 'firstname':
           const { firstname } = newState.fields;
-          //validateFirstnameField(email);
+          validateNameField(firstname);
           break;
         case 'lastname':
           const { lastname } = newState.fields;
-          //validateLastnameField(email);
+          validateNameField(lastname);
           break;
-        case 'password' || 'confirmation':
+          case 'password':
+          case 'confirmation':
           const { password, confirmation } = newState.fields;
-          //validatePasswordField(password, confirmation);
+          validatePasswordField(password, confirmation);
           break;
       }
       this.setState(newState);
@@ -100,7 +103,7 @@ export default class RegistrationForm extends Component<{}, IRegistrationFormSta
                   changePassword={this.changeField("password")}
                   changeConfirmation={this.changeField("confirmation")}
                 />
-                <ProfileFormCheck check={email.isValid} />
+                <PasswordChecks password={password} />
               </Grid>
             </Grid>
           </Box>
