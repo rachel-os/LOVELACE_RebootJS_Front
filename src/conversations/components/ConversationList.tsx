@@ -1,8 +1,8 @@
 import { List } from '@material-ui/core';
 import React, { Component } from 'react';
 import ConversationListItem from './ConversationListItem';
-import {IConversation} from '../types';
-import { getConversations } from '../../api/methods'
+import { IConversation } from '../types';
+import { getConversations } from '../../api/methods';
 
 interface ConversationListState {
   conversations : IConversation[];
