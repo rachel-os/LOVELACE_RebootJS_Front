@@ -12,7 +12,7 @@ export default class ContactListItem extends Component <ContactListItemProps>{
   render() {
     return (
       <ListItemText>
-        Name: {this.props.firstname} {this.props.lastname}
+        {this.props.firstname} {this.props.lastname}
       </ListItemText>
     )
   }
