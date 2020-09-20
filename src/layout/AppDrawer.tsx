@@ -4,14 +4,20 @@ import React, { Component } from 'react';
 import ContactList from '../users/components/ContactList';
 import ConversationList from '../conversations/components/ConversationList';
 import { IDrawerContent } from './types';
+import { getUsers } from '../api/methods';
+import { User } from '../users/types';
+
 
 interface AppDrawerProps {
   showDrawer: boolean;
+  //Je récupère les bonnes infos pour chaque type de contenu.
   drawerContent?: IDrawerContent;
-  // drawerContent: IDrawerContent;
-  // TODO : Récuperer les bonnes infos pour chaque types de contenu;
   hideDrawer: () => void;
   classes: any;
+}
+
+interface AppDrawerState {
+  users: User[];
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -32,9 +38,21 @@ const styles = (theme: Theme) => createStyles({
   },
 })
 
-class AppDrawer extends Component<AppDrawerProps>{
+class AppDrawer extends Component<AppDrawerProps, AppDrawerState>{
+  constructor(props: AppDrawerProps){
+    super(props);
+    this.state = {
+      users: []
+    }
+  }
+
+  componentDidMount(){
+    getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
+  }
+
   render() {
-    const content = this.props.drawerContent === 'contacts' ? <ContactList /> : <ConversationList/>
+    const { users } = this.state;
+    const content = this.props.drawerContent === 'contacts' ? <ContactList users={users}/> : <ConversationList users={users}/>
     return (
       this.props.showDrawer ?
       <Drawer

@@ -1,10 +1,7 @@
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import ContactsIcon from '@material-ui/icons/Contacts';
+import { AppBar, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ContactsIcon from '@material-ui/icons/Contacts';
 import Forum from '@material-ui/icons/Forum';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import React, { Component, Fragment } from 'react';
 import { ProfileButton } from './ProfileButton';
 import { IDrawerContent } from './types';
@@ -33,8 +30,8 @@ export default class AppMenu extends Component<AppMenuProps > {
           </Grid>
           <Grid item>
             <Toolbar>
-            <button onClick={() => changeDrawerContent('contacts')}><ContactsIcon/></button>
-            <button onClick={() => changeDrawerContent('conversations')}><ChatBubbleIcon/></button>
+            <IconButton color='default' onClick={() => changeDrawerContent('contacts')}><ContactsIcon fontSize="large"/></IconButton>
+            <IconButton color='default' onClick={() => changeDrawerContent('conversations')}><ChatBubbleIcon fontSize="large"/></IconButton>
             </Toolbar>
           </Grid>
         </Grid>
