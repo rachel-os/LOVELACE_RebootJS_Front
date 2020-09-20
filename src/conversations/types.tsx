@@ -13,4 +13,4 @@ export interface IConversation {
   updatedAt: Date;
   unseenMessages: number;
   messages: IConversationMessage[];
-} 
+}
