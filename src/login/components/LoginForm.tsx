@@ -1,10 +1,10 @@
-import { Box, Button, Container, Grid,TextField  } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Box, Button, Container, Grid,TextField  } from '@material-ui/core';
 import React, { Component } from 'react';
-import history from '../../history';
-import { login } from '../../api/methods';
 import { IFormField, defaultFormField } from '../../utils/types';
 import { validateRequiredField } from '../../utils/validateRequiredField';
+import { login } from '../../api/methods';
+import history from '../../history';
 
 interface LoginFormState {
   email: IFormField,
@@ -40,14 +40,16 @@ export default class LoginForm extends Component<{}, LoginFormState> {
     const { email, password, status } = this.state;
     return (
       <Container maxWidth='xs'>
-          <form onSubmit={(event) => { event.preventDefault(); this.submit() }}>
-            {/* event.preventDefault : j'empêche son comportement par défaut et je lui demande autre chose, en l'occurence de submit */}
             
             {/* en fonction du status, je définis un message à renvoyer à l'utilisateur. */}
             {status !== 'ready' ?
               <Alert severity={status}>
                 {status === 'success' ? 'User is logged in.' : 'User does not exist.'}
               </Alert> : null }
+            <form onSubmit={(event) => { event.preventDefault(); this.submit() }}>
+              {/* event.preventDefault : j'empêche son comportement par défaut 
+                et je lui demande autre chose, en l'occurence de submit */}
+
             <Box style={{ margin: '2rem 0'}}>
               <TextField
                 label="Email"
@@ -69,7 +71,6 @@ export default class LoginForm extends Component<{}, LoginFormState> {
               required={true}
               value={password.value}
               onChange={(event) => this.setState({
-                ...this.state,
                 password: {value: event.target.value, isValid: validateRequiredField(event.target.value)}
               })}
               fullWidth={true}
