@@ -5,7 +5,7 @@ import { IConversation } from "../conversations/types";
 
 // Fetch users via the server
 export function getUsers(): Promise<User[]> {
-  return axios.get(`${process.env.REACT_APP_BACKEND}/profiles`)
+  return axios.get(`${process.env.REACT_APP_BACKEND}/profiles`, { withCredentials: true })
     .then(resp => {
       return resp.data
     })
@@ -48,8 +48,10 @@ export function getConversations(): Promise<IConversation[]> {
     {
       _id: '123azerty',
       targets: [
-        '5f521cb85729344b47bb4094',
-        '5f5e81834a955217b8ca5166'
+        // Jarred
+        '5f636836b98b846189ef0407',
+        // Dayna
+        '5f636ed0e920a3750e76c458'
       ],
       updatedAt: new Date(),
       unseenMessages: 0,
@@ -58,9 +60,9 @@ export function getConversations(): Promise<IConversation[]> {
           _id: '1',
           conversationId: '123azerty',
           createdAt: new Date(),
-          emitter: '5f521cb85729344b47bb4094',
+          emitter: '5f636836b98b846189ef0407',
           targets: [
-            '5f5e81834a955217b8ca5166'
+            '5f636ed0e920a3750e76c458'
           ],
           content: 'Good morning!'
         },
@@ -68,9 +70,9 @@ export function getConversations(): Promise<IConversation[]> {
           _id: '2',
           conversationId: '123azerty',
           createdAt: new Date(),
-          emitter: '5f5e81834a955217b8ca5166',
+          emitter: '5f636ed0e920a3750e76c458',
           targets: [
-            '5f521cb85729344b47bb4094'
+            '5f636836b98b846189ef0407'
           ],
           content: "Hey! what's up?"
         }
@@ -79,8 +81,10 @@ export function getConversations(): Promise<IConversation[]> {
     {
       _id: '123qwerty',
       targets: [
-        '5f5b486f54b3c2162adc11b2',
-        '5f521cb85729344b47bb4094'
+        // Dayna
+        '5f636ed0e920a3750e76c458',
+        // Favian
+        '5f5b488b54b3c2162adc11b3'
       ],
       updatedAt: new Date(),
       unseenMessages: 0,
@@ -89,9 +93,9 @@ export function getConversations(): Promise<IConversation[]> {
           _id: '1',
           conversationId: '123qwerty',
           createdAt: new Date(),
-          emitter: '5f5b486f54b3c2162adc11b2',
+          emitter: '5f636ed0e920a3750e76c458',
           targets: [
-            '5f521cb85729344b47bb4094'
+            '5f5b488b54b3c2162adc11b3'
           ],
           content: 'Knock, knock...'
         },
@@ -99,9 +103,9 @@ export function getConversations(): Promise<IConversation[]> {
           _id: '2',
           conversationId: '123azerty',
           createdAt: new Date(),
-          emitter: '5f521cb85729344b47bb4094',
+          emitter: '5f5b488b54b3c2162adc11b3',
           targets: [
-            '5f5b486f54b3c2162adc11b2'
+            '5f636ed0e920a3750e76c458'
           ],
           content: "Who's there?"
         }
