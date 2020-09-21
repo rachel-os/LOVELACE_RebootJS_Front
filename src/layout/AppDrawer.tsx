@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import ContactList from '../users/components/ContactList';
 import ConversationList from '../conversations/components/ConversationList';
 import { IDrawerContent } from './types';
-import { getUsers } from '../api/methods';
 import { User } from '../users/types';
+import { getUsers } from '../api/methods';
 
 
 interface AppDrawerProps {
@@ -14,9 +14,6 @@ interface AppDrawerProps {
   drawerContent?: IDrawerContent;
   hideDrawer: () => void;
   classes: any;
-}
-
-interface AppDrawerState {
   users: User[];
 }
 
@@ -38,7 +35,7 @@ const styles = (theme: Theme) => createStyles({
   },
 })
 
-class AppDrawer extends Component<AppDrawerProps, AppDrawerState>{
+class AppDrawer extends Component<AppDrawerProps>{
   constructor(props: AppDrawerProps){
     super(props);
     this.state = {
@@ -51,7 +48,7 @@ class AppDrawer extends Component<AppDrawerProps, AppDrawerState>{
   }
 
   render() {
-    const { users } = this.state;
+    const { users } = this.props;
     const content = this.props.drawerContent === 'contacts' ? <ContactList users={users}/> : <ConversationList users={users}/>
     return (
       this.props.showDrawer ?

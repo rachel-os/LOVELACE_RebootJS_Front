@@ -4,13 +4,18 @@ import ChatUI from '../conversations/components/ChatUI';
 import MyProfile from '../profile/components/MyProfile';
 import LoginScreen from '../login/components/LoginScreen';
 import { HomeScreen } from './HomeScreen';
+import { User } from '../users/types';
 
-export default class AppContent extends Component {
+interface AppContentProps {
+  users: User[];
+}
+
+export default class AppContent extends Component<AppContentProps> {
   render() {
     return (
       <div>
         <Switch>
-        <Route path="/conversation" component={ ChatUI } />
+        <Route path='/conversation/:conversationId' component={() => <ChatUI users={this.props.users}/> } />
         <Route path='/profile' component={MyProfile}/>
         <Route path="/login" component={LoginScreen} />
         <Route path="/" component={HomeScreen} />

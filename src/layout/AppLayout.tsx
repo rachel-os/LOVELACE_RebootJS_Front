@@ -1,5 +1,7 @@
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
+import { getUsers } from '../api/methods';
+import { User } from '../users/types';
 import AppContent from './AppContent';
 import AppDrawer, { drawerWidth } from './AppDrawer';
 import AppMenu from './AppMenu';
@@ -12,14 +14,15 @@ interface AppLayoutProps {
 interface AppLayoutState {
   showDrawer: boolean;
   drawerContent?: IDrawerContent;
+  users: User[];
 }
 
-{/* Pour avoir des classes dynamiques : je veux montrer les classes que je veux appliquer lorsqu'un utilisateur active et désactive le Drawer */ }
-{/* Si j'ai showDrawer true alors je montre certaines classes (contentShift) */ }
-{/* 1. Je complète un tableau avec des classes. */ }
-{/* 2. Je "join" les classes qu'il me reste (l.41)  */ }
-{/* 3. Si le drawer est ouvert alors la classe 2 est filtré */ }
-{/* Fonction dans l'enfant qui vient modifier le parent. */ }
+// Pour avoir des classes dynamiques : je veux montrer les classes que je veux appliquer lorsqu'un utilisateur active et désactive le Drawer 
+// Si j'ai showDrawer true alors je montre certaines classes (contentShift) 
+// 1. Je complète un tableau avec des classes. 
+// 2. Je "join" les classes qu'il me reste (l.41)  
+// 3. Si le drawer est ouvert alors la classe 2 est filtré 
+// 4. J'intègre une fonction dans l'enfant qui vient modifier le parent. 
 
 const styles = (theme: Theme) => createStyles({
   content: {
@@ -47,17 +50,22 @@ class AppLayout extends Component<AppLayoutProps, AppLayoutState> {
     super(props);
     this.state = {
       showDrawer: false,
+      users: []
     }
   }
-
+  
   changeDrawerContent = (content: IDrawerContent) => {
     this.setState({ showDrawer: true, drawerContent: content });
   }
-
+  
   hideDrawer = () => {
     this.setState({ showDrawer: false });
   }
-
+  
+  componentDidMount(){
+    getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
+  }
+  
   render() {
     const { classes } = this.props;
     const filteredClasses = [classes.content, this.state.showDrawer && classes.contentShift].filter(Boolean).join(' ');
@@ -65,13 +73,13 @@ class AppLayout extends Component<AppLayoutProps, AppLayoutState> {
       <Fragment>
         <div className={filteredClasses}>
           <AppMenu changeDrawerContent={this.changeDrawerContent} />
-          <AppContent />
+          <AppContent  users={this.state.users}/>
         </div>
-        <AppDrawer
+        <AppDrawer users={this.state.users} 
           drawerContent={this.state.drawerContent}
           showDrawer={this.state.showDrawer}
           hideDrawer={this.hideDrawer}
-        />
+          />
       </Fragment>
     )
   }
