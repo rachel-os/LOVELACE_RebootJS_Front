@@ -3,7 +3,7 @@ import { AvatarGroup } from '@material-ui/lab';
 import React, { Component, Fragment } from 'react';
 import { IConversation } from '../types';
 import { User } from '../../users/types';
-import { Link } from 'react-router-dom';
+import history from '../../history';
 
 // Une fois la conversation initialisée, on ne la change plus donc : props.
 interface ConversationListItemProps {
@@ -13,21 +13,22 @@ interface ConversationListItemProps {
 
 export default class ConversationListItem extends Component<ConversationListItemProps> {
   render() {
+    const { conversation } = this.props;
     return (
-      <Link to={`/conversation/${this.props.conversation._id}`}>
+      <div>
+        <ListItem button onClick={() => history.push(`/conversation/${conversation._id}`)}>
         <List>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <AvatarGroup max={3}>
-                {/* <Avatar alt="avatar" src="/static/images/avatar/1.jpg" /> */}
-                {this.props.conversation.targets.map((target, index) =>
+                {conversation.targets.map((target, index) =>
                   <Avatar key={index}>
                     {this.getUserFormList(target)?.firstname[0] || 'user unknown.'[0]}
                   </Avatar>)}
               </AvatarGroup>
             </ListItemAvatar>
             <ListItemText
-              primary={this.props.conversation.messages[0].content}
+              primary={conversation.messages[conversation.messages.length-1].content}
               secondary={
                 <Fragment>
                   <Typography
@@ -35,10 +36,10 @@ export default class ConversationListItem extends Component<ConversationListItem
                     variant="body2"
                     color="textPrimary"
                   >
-                    {this.props.conversation.targets.join(', ')}
+                    {conversation.targets.join(', ')}
                   </Typography>
                   <Typography>
-                    {this.props.conversation.updatedAt.toLocaleString()}
+                    {conversation.updatedAt.toLocaleString()}
                   </Typography>
                 </Fragment>
               }
@@ -46,7 +47,8 @@ export default class ConversationListItem extends Component<ConversationListItem
           </ListItem>
           <Divider variant="inset" component="li" />
         </List>
-      </Link>
+        </ListItem>
+      </div>
     )
   }
   getUserFormList = (id: string) => this.props.users.find(user => user._id === id)

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { User } from '../users/types';
 import { IProfile } from "../profile/types";
-import { IConversation } from "../conversations/types";
+import { IConversation, IConversationMessage } from "../conversations/types";
 
 // Fetch users via the server
 export function getUsers(): Promise<User[]> {
@@ -42,9 +42,40 @@ export function register(
     .then(resp => resp.data);
 }
 
-export async function getConversations(): Promise<IConversation[]> {
+// Get conversations
+export async function getConversations(connectedUser: User): Promise<IConversation[]> {
+  //Fetch des messages à l'API
   const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages`, { withCredentials: true })
-  return resp.data;
+  const messages: IConversationMessage[] = resp.data;
+
+  //Traitement sur les messages : messages => conversations
+  if (messages.length === 0) return []
+
+  const batches = messages.reduce<{ [conversationId: string]: IConversationMessage[] }>(
+    (acc, message) => ({
+      ...acc,
+      [message.conversationId]: [...(acc[message.conversationId] || []), message],
+    }),
+    {},
+  );
+
+  const conversations: IConversation[] = [];
+  for (const conversationId in batches) {
+    const messages = batches[conversationId];
+
+    const attendees = [...new Set(messages.flatMap(({ emitter, targets }) => [emitter, ...targets]))];
+
+    const targets = attendees.filter((id) => id !== connectedUser._id);
+
+    conversations.push({
+      _id: conversationId,
+      targets: targets,
+      messages: messages,
+      updatedAt: getLastMessageDate(messages),
+      unseenMessages: 0
+    })
+  }
+  return conversations;
 }
 
 export async function getConversation(conversationId: string): Promise<IConversation[]> {
@@ -58,3 +89,7 @@ export async function sendMessage(conversationId: string, targets: string[], con
     { withCredentials: true });
   return resp.data;
 }
+
+function getLastMessageDate(messages: IConversationMessage[]) {
+  return messages[messages.length - 1].createdAt;
+} 	

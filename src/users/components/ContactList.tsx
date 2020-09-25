@@ -13,11 +13,11 @@ interface ContactListProps {
   connectedUser?: User;
 }
 export default class ContactList extends Component<ContactListProps> {
-  createConversation(target: string){
+  createConversation = (target: string) => {
     const {connectedUser} = this.props;
     if(connectedUser){
       const conversationId = this.generateConversationId(connectedUser._id, target);
-      return history.push(`/conversation/${conversationId}`);
+      return history.push(`/conversation/${conversationId}?target=${target}`);
     }
   }
   render() {

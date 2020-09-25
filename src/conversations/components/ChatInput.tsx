@@ -23,6 +23,7 @@ export default class ChatInput extends Component<IChatInputProps, IChatInputStat
   sendMessage = () => {
     console.log(`This message ${this.state.message} is going to be sent to conversation n# ${this.props.conversationId}`);
     this.props.doSendMessage(this.state.message);
+    this.setState({message: ''});
   }
 
   updateMessage = (newValue: string) => {

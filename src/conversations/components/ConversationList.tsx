@@ -7,12 +7,11 @@ import { getConversations } from '../../api/methods';
 
 interface ConversationListProps {
   users: User[];
+  connectedUser?: User;
 }
 interface ConversationListState {
   conversations : IConversation[];
 }
-
-// On n'a pas de props mais un state
 export default class ConversationList extends Component <ConversationListProps, ConversationListState> {
   constructor(props: ConversationListProps){
     super(props);
@@ -22,7 +21,8 @@ export default class ConversationList extends Component <ConversationListProps, 
   }
   
   componentDidMount(){
-    getConversations()
+    if(!this.props.connectedUser) { return }
+    getConversations(this.props.connectedUser)
     .then(conversations => this.setState({ conversations: conversations }))
     .catch(error => console.log(error));
   }
