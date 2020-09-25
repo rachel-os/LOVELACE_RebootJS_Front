@@ -1,6 +1,6 @@
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import React, { Component, Fragment } from 'react';
-import { getUsers } from '../api/methods';
+import { getConnectedProfile, getUsers } from '../api/methods';
 import { User } from '../users/types';
 import AppContent from './AppContent';
 import AppDrawer, { drawerWidth } from './AppDrawer';
@@ -15,6 +15,7 @@ interface AppLayoutState {
   showDrawer: boolean;
   drawerContent?: IDrawerContent;
   users: User[];
+  profile?: User;
 }
 
 // Pour avoir des classes dynamiques : je veux montrer les classes que je veux appliquer lorsqu'un utilisateur active et désactive le Drawer 
@@ -64,6 +65,7 @@ class AppLayout extends Component<AppLayoutProps, AppLayoutState> {
   
   componentDidMount(){
     getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
+    getConnectedProfile().then(profile => { this.setState({ profile }); })
   }
   
   render() {
@@ -73,9 +75,11 @@ class AppLayout extends Component<AppLayoutProps, AppLayoutState> {
       <Fragment>
         <div className={filteredClasses}>
           <AppMenu changeDrawerContent={this.changeDrawerContent} />
-          <AppContent  users={this.state.users}/>
+          <AppContent connectedUser={this.state.profile} users={this.state.users}/>
         </div>
-        <AppDrawer users={this.state.users} 
+        <AppDrawer
+          connectedUser={this.state.profile}
+          users={this.state.users} 
           drawerContent={this.state.drawerContent}
           showDrawer={this.state.showDrawer}
           hideDrawer={this.hideDrawer}

@@ -5,8 +5,6 @@ import ContactList from '../users/components/ContactList';
 import ConversationList from '../conversations/components/ConversationList';
 import { IDrawerContent } from './types';
 import { User } from '../users/types';
-import { getUsers } from '../api/methods';
-
 
 interface AppDrawerProps {
   showDrawer: boolean;
@@ -15,6 +13,7 @@ interface AppDrawerProps {
   hideDrawer: () => void;
   classes: any;
   users: User[];
+  connectedUser?: User;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -36,20 +35,9 @@ const styles = (theme: Theme) => createStyles({
 })
 
 class AppDrawer extends Component<AppDrawerProps>{
-  constructor(props: AppDrawerProps){
-    super(props);
-    this.state = {
-      users: []
-    }
-  }
-
-  componentDidMount(){
-    getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
-  }
-
   render() {
     const { users } = this.props;
-    const content = this.props.drawerContent === 'contacts' ? <ContactList users={users}/> : <ConversationList users={users}/>
+    const content = this.props.drawerContent === 'contacts' ? <ContactList connectedUser={this.props.connectedUser} users={users}/> : <ConversationList users={users}/>
     return (
       this.props.showDrawer ?
       <Drawer
