@@ -8,11 +8,12 @@ interface IChatInputState {
 
 interface IChatInputProps {
   conversationId: string;
+  doSendMessage: (message: string) => void;
 }
 
 // Ce composant porte la responsabilité d'envoyer les messages.
 export default class ChatInput extends Component<IChatInputProps, IChatInputState> {
-  constructor(props: IChatInputProps){
+  constructor(props: IChatInputProps) {
     super(props);
     this.state = {
       message: ''
@@ -21,10 +22,11 @@ export default class ChatInput extends Component<IChatInputProps, IChatInputStat
 
   sendMessage = () => {
     console.log(`This message ${this.state.message} is going to be sent to conversation n# ${this.props.conversationId}`);
+    this.props.doSendMessage(this.state.message);
   }
-  
+
   updateMessage = (newValue: string) => {
-    this.setState({message: newValue});
+    this.setState({ message: newValue });
   }
   render() {
     return (

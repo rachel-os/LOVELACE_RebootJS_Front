@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { match, withRouter } from 'react-router-dom';
-import { getConversations } from '../../api/methods';
+import { getConversations, sendMessage } from '../../api/methods';
 import AttendeesList from './AttendeesList';
 import { User } from '../../users/types';
 import { IConversation } from '../types';
@@ -13,9 +13,7 @@ interface ChatUIState {
 
 interface ChatUIProps {
   match: match<{ conversationId: string }>;
-  // location correspond à là où je me trouve actuellement.
   location: any;
-  // history correspond à l'historique de navigation.
   history: any;
   users: User[];
 }
@@ -28,15 +26,25 @@ class ChatUI extends Component<ChatUIProps, ChatUIState> {
     this.state = {};
   }
 
-  // temporaire pour avoir une conversation dans le state.
-  // TO DO : éviter de faire plusieurs appels => remonter l'appel dans la hierarchie de composants.
-
   componentDidMount() {
     getConversations()
       .then(conversations => {
         const conversation = conversations.find(conv => conv._id === this.props.match.params.conversationId)
         this.setState({ conversation: conversation })
     })
+  }
+
+  doSendMessage = async (message: string) => {
+    const { conversation } = this.state;
+    if(conversation) {
+      const sentMessage = await sendMessage(conversation._id, conversation.targets, message);
+      this.setState({
+        conversation: {
+          ...conversation,
+          messages: [...conversation.messages, sentMessage]
+        }
+      })
+    }
   }
 
   render() {
@@ -47,7 +55,7 @@ class ChatUI extends Component<ChatUIProps, ChatUIState> {
         { this.state.conversation ? 
         <Fragment>
           <ChatMessages messages={this.state.conversation.messages} />
-          <ChatInput conversationId={this.state.conversation._id} />
+          <ChatInput doSendMessage={this.doSendMessage} conversationId={this.state.conversation._id} />
           <AttendeesList attendees={this.props.users.filter(user => this.state.conversation?.targets.includes(user._id))} />
         </Fragment> : <h3>Yikes! Conversation not found.</h3>}
       </Fragment>

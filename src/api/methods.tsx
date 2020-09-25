@@ -42,74 +42,19 @@ export function register(
     .then(resp => resp.data);
 }
 
-// je crée un mock (un peu brutal ^^) pour les conversations provisoirement 
-export function getConversations(): Promise<IConversation[]> {
-  return Promise.resolve([
-    {
-      _id: '123azerty',
-      targets: [
-        // Jarred
-        '5f636836b98b846189ef0407',
-        // Dayna
-        '5f636ed0e920a3750e76c458'
-      ],
-      updatedAt: new Date(),
-      unseenMessages: 0,
-      messages: [
-        {
-          _id: '1',
-          conversationId: '123azerty',
-          createdAt: new Date(),
-          emitter: '5f636836b98b846189ef0407',
-          targets: [
-            '5f636ed0e920a3750e76c458'
-          ],
-          content: 'Good morning!'
-        },
-        {
-          _id: '2',
-          conversationId: '123azerty',
-          createdAt: new Date(),
-          emitter: '5f636ed0e920a3750e76c458',
-          targets: [
-            '5f636836b98b846189ef0407'
-          ],
-          content: "Hey! what's up?"
-        }
-      ]
-    },
-    {
-      _id: '123qwerty',
-      targets: [
-        // Dayna
-        '5f636ed0e920a3750e76c458',
-        // Favian
-        '5f5b488b54b3c2162adc11b3'
-      ],
-      updatedAt: new Date(),
-      unseenMessages: 0,
-      messages: [
-        {
-          _id: '1',
-          conversationId: '123qwerty',
-          createdAt: new Date(),
-          emitter: '5f636ed0e920a3750e76c458',
-          targets: [
-            '5f5b488b54b3c2162adc11b3'
-          ],
-          content: 'Knock, knock...'
-        },
-        {
-          _id: '2',
-          conversationId: '123azerty',
-          createdAt: new Date(),
-          emitter: '5f5b488b54b3c2162adc11b3',
-          targets: [
-            '5f636ed0e920a3750e76c458'
-          ],
-          content: "Who's there?"
-        }
-      ]
-    }
-  ])
+export async function getConversations(): Promise<IConversation[]> {
+  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages`, { withCredentials: true })
+  return resp.data;
+}
+
+export async function getConversation(conversationId: string): Promise<IConversation[]> {
+  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages/${conversationId}`, { withCredentials: true })
+  return resp.data;
+}
+
+export async function sendMessage(conversationId: string, targets: string[], content: string) {
+  const resp = await axios.post(`${process.env.REACT_APP_BACKEND}/messages`,
+    { conversationId, targets, content },
+    { withCredentials: true });
+  return resp.data;
 }
